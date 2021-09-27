@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthorController;
 
 
 /*
@@ -26,3 +27,10 @@ Route::post('books','BookController@store');
 Route::get('books/{id}','BookController@show');
 Route::put('books/{id}','BookController@update');
 Route::delete('books/{id}','BookController@destroy');
+
+//AuthorChallenge
+Route::get('authors','AuthorController@index');
+Route::post('authors','AuthorController@store');
+Route::get('authors/{id}','AuthorController@show');
+Route::put('authors/{id}','AuthorController@update');
+Route::delete('authors/{id}','AuthorController@destroy');
