@@ -21,16 +21,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('me','AuthController@me');
-Route::get('books','BookController@index');
-Route::post('books','BookController@store');
-Route::get('books/{id}','BookController@show');
-Route::put('books/{id}','BookController@update');
-Route::delete('books/{id}','BookController@destroy');
+Route::group(['middleware' => ['auth:sanctum']], function (){
+    Route::get('books','BookController@index');
+    Route::post('books','BookController@store');
+    Route::get('books/{id}','BookController@show');
+    Route::put('books/{id}','BookController@update');
+    Route::delete('books/{id}','BookController@destroy');
+    
+    //AuthorChallenge
+    Route::get('authors','AuthorController@index');
+    Route::post('authors','AuthorController@store');
+    Route::get('authors/{id}','AuthorController@show');
+    Route::put('authors/{id}','AuthorController@update');
+    Route::delete('authors/{id}','AuthorController@destroy');
 
-//AuthorChallenge
-Route::get('authors','AuthorController@index');
-Route::post('authors','AuthorController@store');
-Route::get('authors/{id}','AuthorController@show');
-Route::put('authors/{id}','AuthorController@update');
-Route::delete('authors/{id}','AuthorController@destroy');
+    Route::post('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+// routes/api.php
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
